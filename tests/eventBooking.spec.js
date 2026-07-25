@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
 const { LoginPage } = require('../pageObjects/LoginPage')
-const {EBCreateNewEventPage} = require('../pageObjects/CreateNewEventPage');
+const {CreateNewEventPage} = require('../pageObjects/CreateNewEventPage');
 
 test('create Event booking', async ({ page }) => {
 
@@ -10,7 +10,7 @@ test('create Event booking', async ({ page }) => {
 
   // Step 1 — Login
 
-  const loginPage = new EBLoginPage(page);        
+  const loginPage = new LoginPage(page);        
   await loginPage.gotoPage();
 
   await loginPage.login(emailId, password);
@@ -20,7 +20,7 @@ test('create Event booking', async ({ page }) => {
 
 
   // Step 2 — Create a new event
-  const createNewEventPage = new EBCreateNewEventPage(page);
+  const createNewEventPage = new CreateNewEventPage(page);
   const eventName = await createNewEventPage.createNewEvent();
   
 
