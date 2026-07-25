@@ -1,7 +1,8 @@
 const { test, expect } = require('@playwright/test');
 
 const { LoginPage } = require('../pageObjects/LoginPage')
-const {CreateNewEventPage} = require('../pageObjects/CreateNewEventPage');
+const { CreateNewEventPage } = require('../pageObjects/CreateNewEventPage');
+const {EventsPage} = require('../pageObjects/EventsPage');
 
 test('create Event booking', async ({ page }) => {
 
@@ -10,7 +11,7 @@ test('create Event booking', async ({ page }) => {
 
   // Step 1 — Login
 
-  const loginPage = new LoginPage(page);        
+  const loginPage = new LoginPage(page);
   await loginPage.gotoPage();
 
   await loginPage.login(emailId, password);
@@ -22,98 +23,79 @@ test('create Event booking', async ({ page }) => {
   // Step 2 — Create a new event
   const createNewEventPage = new CreateNewEventPage(page);
   const eventName = await createNewEventPage.createNewEvent();
-  
+
 
   // Assert if event has been added
   await createNewEventPage.assertEventName(eventName);
   // await expect(page.getByText(eventName)).toBeVisible();
 
-//   // Step 3 — Find the event card and capture seats
+  //   // Step 3 — Find the event card and capture seats
 
-//   // click on Events tab
-//   await page.locator("#nav-events").click();
+  const eventsPage = new EventsPage(page);
+  await eventsPage.openEvents();
+  const addedCard = await eventsPage.findEventCard(eventName);
 
-//   await page.waitForLoadState("networkidle");
+  // Count seatsBeforeBooking
+  const seatCount = await eventsPage.seatBeforeBooking(addedCard);
+  console.log(seatCount);
 
-//   const allEventCards = await page.locator("#event-card");
-//   console.log(await allEventCards.count());
+  //   // Step 4 :- click on book now
 
-//   await page.waitForSelector('#event-card', { state: 'visible', timeout: 5000 });
+  //   await addedCard.getByTestId("book-now-btn").click();
 
-//   expect(await allEventCards.first()).toBeVisible();
+  //   // Step 5: 
+  //   // Assert ticket count is 1 by default
+  //   await expect(await page.locator('#ticket-count')).toHaveText("1");
 
-//   // console.log(allEventCards.first().allTextContents());
+  //   // Fill details
+  //   await page.getByLabel("Full Name").fill("Ronaldo");
+  //   await page.locator("#customer-email").fill("email@gmail.com");
+  //   await page.getByPlaceholder("+91 98765 43210").fill("1234567890");
+  //   await page.getByText('Confirm Booking').click();
 
-//   // Find the added card
-//   const addedCard = await allEventCards.filter({ hasText: eventName });
-//   console.log(await addedCard.getByText(eventName).textContent());
-//   await expect(addedCard).toBeVisible({ timeout: 5000 });
+  //   // get the booking reference
+  //   const bookingref = await page.locator(".booking-ref").textContent();
+  //   console.log(bookingref);
 
-//   // Count seatsBeforeBooking
-//   const seatsBeforeBooking = await addedCard.getByText(" seats available").textContent();
-//   // const seatsBeforeBooking = await addedCard.locator('span').filter({ hasText: '50 seats available' }).first().textContent();
-//   console.log(seatsBeforeBooking);
+  //   await expect(page.locator(".booking-ref")).toBeVisible();
 
-//   const seatCount = seatsBeforeBooking.split(" ")[0];
-//   console.log(seatCount);
+  //   await page.locator('button').filter({ hasText: 'View My Bookings' }).click();
 
-//   // Step 4 :- click on book now
+  //   await expect(page).toHaveURL("https://eventhub.rahulshettyacademy.com/bookings");
 
-//   await addedCard.getByTestId("book-now-btn").click();
+  //   const allBookedCards = await page.locator('#booking-card');
 
-//   // Step 5: 
-//   // Assert ticket count is 1 by default
-//   await expect(await page.locator('#ticket-count')).toHaveText("1");
+  //   // Assert 1st booking card is visible
+  //   expect(await allBookedCards.first()).toBeVisible();
 
-//   // Fill details
-//   await page.getByLabel("Full Name").fill("Ronaldo");
-//   await page.locator("#customer-email").fill("email@gmail.com");
-//   await page.getByPlaceholder("+91 98765 43210").fill("1234567890");
-//   await page.getByText('Confirm Booking').click();
+  //   // Assert card with your booking ref
+  //   const myBookingCard = await allBookedCards.locator('.booking-ref').filter({ hasText: bookingref });
+  //   await expect(myBookingCard).toHaveText(bookingref);
+  //   console.log(await myBookingCard.textContent());
 
-//   // get the booking reference
-//   const bookingref = await page.locator(".booking-ref").textContent();
-//   console.log(bookingref);
+  //   const confirmYourEventName = await allBookedCards.getByRole('heading', { name: eventName })
+  //   console.log(await confirmYourEventName.textContent());
 
-//   await expect(page.locator(".booking-ref")).toBeVisible();
+  //   await expect(confirmYourEventName).toHaveText(eventName);
 
-//   await page.locator('button').filter({ hasText: 'View My Bookings' }).click();
+  //   // Navigate back to events
+  //   await page.locator("#nav-events").click();
 
-//   await expect(page).toHaveURL("https://eventhub.rahulshettyacademy.com/bookings");
+  //   console.log(await allEventCards.count());
 
-//   const allBookedCards = await page.locator('#booking-card');
+  //   expect(await allEventCards.first()).toBeVisible();
 
-//   // Assert 1st booking card is visible
-//   expect(await allBookedCards.first()).toBeVisible();
+  //   console.log(await addedCard.locator("h3").textContent());
+  //   await expect(addedCard).toBeVisible({ timeout: 5000 });
 
-//   // Assert card with your booking ref
-//   const myBookingCard = await allBookedCards.locator('.booking-ref').filter({ hasText: bookingref });
-//   await expect(myBookingCard).toHaveText(bookingref);
-//   console.log(await myBookingCard.textContent());
+  //   // Count seatsAfterBooking
+  //   const seatsAfterBooking = await addedCard.getByText(" seats available").textContent();
+  //   console.log(seatsAfterBooking);
 
-//   const confirmYourEventName = await allBookedCards.getByRole('heading', { name: eventName })
-//   console.log(await confirmYourEventName.textContent());
+  //   const seatCountAfter = seatsAfterBooking.split(" ")[0];
+  //   console.log("seat Count After Booking: ", seatCountAfter);
 
-//   await expect(confirmYourEventName).toHaveText(eventName);
-
-//   // Navigate back to events
-//   await page.locator("#nav-events").click();
-
-//   console.log(await allEventCards.count());
-
-//   expect(await allEventCards.first()).toBeVisible();
-
-//   console.log(await addedCard.locator("h3").textContent());
-//   await expect(addedCard).toBeVisible({ timeout: 5000 });
-
-//   // Count seatsAfterBooking
-//   const seatsAfterBooking = await addedCard.getByText(" seats available").textContent();
-//   console.log(seatsAfterBooking);
-
-//   const seatCountAfter = seatsAfterBooking.split(" ")[0];
-//   console.log("seat Count After Booking: ", seatCountAfter);
-
-//   await expect(seatsBeforeBooking === seatsAfterBooking - 1)
+  //   await expect(seatsBeforeBooking === seatsAfterBooking - 1)
 
   // await page.pause();
 
