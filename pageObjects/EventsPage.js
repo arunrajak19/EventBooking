@@ -31,17 +31,21 @@ class EventsPage {
         return addedCard;
     }
 
-    async seatBeforeBooking(addedCard) {
-        const seatsBeforeBooking = await addedCard.getByText(" seats available").textContent();
-        console.log(seatsBeforeBooking);
+    async availableSeats(addedCard) {
+        const totalSeats = await addedCard.getByText(" seats available").textContent();
+        console.log(totalSeats);
 
-        const seatCount = seatsBeforeBooking.split(" ")[0];
+        const seatCount = totalSeats.split(" ")[0];
 
         return seatCount;
     }
 
     async bookNow(addedCard){
          await addedCard.getByTestId("book-now-btn").click();
+    }
+
+    async assertSeatsBeforeAndAfterBooking(seatsBeforeBooking, seatsAfterBooking){
+        await expect(seatsBeforeBooking === seatsAfterBooking - 1);
     }
 }
 
