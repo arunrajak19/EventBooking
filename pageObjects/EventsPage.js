@@ -39,6 +39,10 @@ class EventsPage {
 
         return seatCount;
     }
+
+    async bookNow(addedCard){
+         await addedCard.getByTestId("book-now-btn").click();
+    }
 }
 
 module.exports = { EventsPage }

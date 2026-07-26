@@ -2,7 +2,8 @@ const { test, expect } = require('@playwright/test');
 
 const { LoginPage } = require('../pageObjects/LoginPage')
 const { CreateNewEventPage } = require('../pageObjects/CreateNewEventPage');
-const {EventsPage} = require('../pageObjects/EventsPage');
+const { EventsPage } = require('../pageObjects/EventsPage');
+const { BookTickets } = require('../pageObjects/BookTickets');
 
 test('create Event booking', async ({ page }) => {
 
@@ -41,17 +42,12 @@ test('create Event booking', async ({ page }) => {
 
   //   // Step 4 :- click on book now
 
-  //   await addedCard.getByTestId("book-now-btn").click();
+  await eventsPage.bookNow(addedCard);
 
-  //   // Step 5: 
-  //   // Assert ticket count is 1 by default
-  //   await expect(await page.locator('#ticket-count')).toHaveText("1");
-
-  //   // Fill details
-  //   await page.getByLabel("Full Name").fill("Ronaldo");
-  //   await page.locator("#customer-email").fill("email@gmail.com");
-  //   await page.getByPlaceholder("+91 98765 43210").fill("1234567890");
-  //   await page.getByText('Confirm Booking').click();
+  //   // Step 5: Book ticket
+  const bookTickets = new BookTickets(page);
+  await bookTickets.assertTicketCountIsOne();
+  await bookTickets.fillDetails();
 
   //   // get the booking reference
   //   const bookingref = await page.locator(".booking-ref").textContent();
