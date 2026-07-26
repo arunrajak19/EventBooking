@@ -10,14 +10,10 @@ class MyBookings {
 
     async bookingCards() {
         await this.myBookingbtn.click();
-
         await expect(this.page).toHaveURL("https://eventhub.rahulshettyacademy.com/bookings");
-
         const allBookedCards = await this.bookedCards;
-
         // Assert 1st booking card is visible
         expect(await allBookedCards.first()).toBeVisible();
-
         return allBookedCards;
     }
 
@@ -26,10 +22,8 @@ class MyBookings {
           const myBookingCard = await allBookedCards.locator('.booking-ref').filter({ hasText: bookingref });
           await expect(myBookingCard).toHaveText(bookingref);
           console.log(await myBookingCard.textContent());
-
           const confirmYourEventName = await allBookedCards.getByRole('heading', { name: eventName })
           console.log(await confirmYourEventName.textContent());
-
           await expect(confirmYourEventName).toHaveText(eventName);
     }
 }

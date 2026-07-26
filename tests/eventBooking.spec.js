@@ -18,18 +18,12 @@ test('create Event booking', async ({ page }) => {
 
   await loginPage.login(emailId, password);
 
-
-  // await page.waitForLoadState('networkidle');
-
-
   // Step 2 — Create a new event
   const createNewEventPage = new CreateNewEventPage(page);
   const eventName = await createNewEventPage.createNewEvent();
 
-
   // Assert if event has been added
   await createNewEventPage.assertEventName(eventName);
-  // await expect(page.getByText(eventName)).toBeVisible();
 
   //   // Step 3 — Find the event card and capture seats
 
@@ -63,28 +57,11 @@ test('create Event booking', async ({ page }) => {
   //   // Navigate back to events
 
   await eventsPage.openEvents();
-  //   await page.locator("#nav-events").click();
-
-  //   console.log(await allEventCards.count());
-
-  //   expect(await allEventCards.first()).toBeVisible();
-
-  //   console.log(await addedCard.locator("h3").textContent());
-  //   await expect(addedCard).toBeVisible({ timeout: 5000 });
   const addedCardAfterBooking = await eventsPage.findEventCard(eventName);
 
-  //   // Count seatsAfterBooking
   const seatsAfterBooking = await eventsPage.availableSeats(addedCardAfterBooking);
-  //   const seatsAfterBooking = await addedCard.getByText(" seats available").textContent();
-  //   console.log(seatsAfterBooking);
 
-  //   const seatCountAfter = seatsAfterBooking.split(" ")[0];
-    console.log("seat Count After Booking: ", seatCountAfter);
+    console.log("seat Count After Booking: ", seatsAfterBooking);
   await eventsPage.assertSeatsBeforeAndAfterBooking(seatsBeforeBooking, seatsAfterBooking);
-  //   await expect(seatsBeforeBooking === seatsAfterBooking - 1)
-
-
-  // await page.pause();
-
 
 });

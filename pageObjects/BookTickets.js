@@ -18,7 +18,6 @@ class BookTickets {
     }
 
     async fillDetails() {
-
         await this.fullName.fill("Ronaldo");
         await this.customerEmail.fill("email@gmail.com");
         await this.phoneNumber.fill("1234567890");

@@ -5,7 +5,6 @@ class LoginPage {
         this.userEmailId = page.getByPlaceholder("you@email.com");
         this.userPassword = page.getByLabel("Password");
         this.logInbtn = page.locator("#login-btn");
-        // this.page.waitForLoadState('networkidle');
     }
 
     async gotoPage() {
@@ -16,7 +15,6 @@ class LoginPage {
         await this.userEmailId.fill(emailId);
         await this.userPassword.fill(password);
         await this.logInbtn.click();
-        
         await this.page.waitForLoadState('networkidle');
     }
 }
