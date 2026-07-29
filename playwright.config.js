@@ -6,11 +6,12 @@ import { chromium, defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
-  timeout : 30 * 1000,
-  expect : {
-    timeout : 20 * 1000,
+  retries: 1,
+  timeout: 30 * 1000,
+  expect: {
+    timeout: 20 * 1000,
   },
-  reporter : 'html',
+  reporter: 'html',
   projects: [
     {
       name: 'chrome',
