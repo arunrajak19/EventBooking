@@ -6,17 +6,15 @@ const { EventsPage } = require('../pageObjects/EventsPage');
 const { BookTickets } = require('../pageObjects/BookTickets');
 const { MyBookings } = require('../pageObjects/MyBookings');
 
+const dataSet = JSON.parse(JSON.stringify(require('../utils/EventBookingTestData.json')));
 test('create Event booking', async ({ page }) => {
-
-  const emailId = "lionel@gmail.com";
-  const password = "Messi@10";
 
   // Step 1 — Login
 
   const loginPage = new LoginPage(page);
   await loginPage.gotoPage();
 
-  await loginPage.login(emailId, password);
+  await loginPage.login(dataSet.emailId, dataSet.password);
 
   // Step 2 — Create a new event
   const createNewEventPage = new CreateNewEventPage(page);
