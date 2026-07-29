@@ -11,17 +11,34 @@ export default defineConfig({
     timeout : 20 * 1000,
   },
   reporter : 'html',
-  use: {
+  projects: [
+    {
+      name: 'chrome',
+      use: {
 
-    browserName : 'chromium',
-    headless : true,
-    screenshot : 'on',
-    trace : 'on' 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-  
-  },
+        browserName: 'chromium',
+        headless: false,
+        screenshot: 'on',
+        video: 'off',
+        trace: 'on',
+        // ...devices['iPhone 17 Pro Max']
+        // trace : 'retain-on-failure'
+        /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 
+      }
+    },
 
+    {
+      name: 'safari',
+      use: {
+
+        browserName: 'webkit',
+        headless: true,
+        screenshot: 'off',
+        trace: 'on'
+      }
+    }
+  ]
 });
 
 // module.exports = confiq
