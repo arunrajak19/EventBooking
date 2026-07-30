@@ -1,23 +1,20 @@
 const { test, expect } = require('@playwright/test');
 
-const { LoginPage } = require('../pageObjects/LoginPage')
-const { CreateNewEventPage } = require('../pageObjects/CreateNewEventPage');
-const { EventsPage } = require('../pageObjects/EventsPage');
-const { BookTickets } = require('../pageObjects/BookTickets');
-const { MyBookings } = require('../pageObjects/MyBookings');
+const { PageObjectManager } = require('../pageObjects/PageObjectManager')
 
 const dataSet = JSON.parse(JSON.stringify(require('../utils/EventBookingTestData.json')));
 test('create Event booking', async ({ page }) => {
 
+  const pageObjectManager = new PageObjectManager(page);
   // Step 1 — Login
 
-  const loginPage = new LoginPage(page);
+  const loginPage = pageObjectManager.getLoginPage();
   await loginPage.gotoPage();
 
   await loginPage.login(dataSet.emailId, dataSet.password);
 
   // Step 2 — Create a new event
-  const createNewEventPage = new CreateNewEventPage(page);
+  const createNewEventPage = pageObjectManager.getCreateNewEventPage();
   const eventName = await createNewEventPage.createNewEvent();
 
   // Assert if event has been added
@@ -25,30 +22,28 @@ test('create Event booking', async ({ page }) => {
 
   //   // Step 3 — Find the event card and capture seats
 
-  const eventsPage = new EventsPage(page);
+  const eventsPage = pageObjectManager.getEventsPage();
   await eventsPage.openEvents();
   const addedCard = await eventsPage.findEventCard(eventName);
 
   // Count seatsBeforeBooking
   const seatsBeforeBooking = await eventsPage.availableSeats(addedCard);
-  console.log(seatsBeforeBooking);
 
   //   // Step 4 :- click on book now
 
   await eventsPage.bookNow(addedCard);
 
   //   // Step 5: Book ticket
-  const bookTickets = new BookTickets(page);
+  const bookTickets = pageObjectManager.getBookTickets();
   await bookTickets.assertTicketCountIsOne();
   await bookTickets.fillDetails();
 
   //   // get the booking reference
   const bookingref = await bookTickets.bookingRefrence();
-  console.log(bookingref);
   await bookTickets.assertBookingRef();
 
   // step 6 :- My booking page
-  const myBookings = new MyBookings(page);
+  const myBookings = pageObjectManager.getMyBookings();
   const allBookedCards = await myBookings.bookingCards();
   await myBookings.myBookedCard(allBookedCards, bookingref, eventName);
 
@@ -59,7 +54,6 @@ test('create Event booking', async ({ page }) => {
 
   const seatsAfterBooking = await eventsPage.availableSeats(addedCardAfterBooking);
 
-    console.log("seat Count After Booking: ", seatsAfterBooking);
   await eventsPage.assertSeatsBeforeAndAfterBooking(seatsBeforeBooking, seatsAfterBooking);
 
 });

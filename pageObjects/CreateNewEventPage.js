@@ -23,7 +23,6 @@ class CreateNewEventPage {
         const title = Date.now();
         const titleName = String(title);
         const eventName = `Test Event ${titleName}`;
-        console.log(eventName);
 
         await this.eventTitle.fill(eventName);
         await this.description.fill("Assing a new event");

@@ -21,9 +21,7 @@ class MyBookings {
         //   // Assert card with your booking ref
           const myBookingCard = await allBookedCards.locator('.booking-ref').filter({ hasText: bookingref });
           await expect(myBookingCard).toHaveText(bookingref);
-          console.log(await myBookingCard.textContent());
           const confirmYourEventName = await allBookedCards.getByRole('heading', { name: eventName })
-          console.log(await confirmYourEventName.textContent());
           await expect(confirmYourEventName).toHaveText(eventName);
     }
 }

@@ -15,13 +15,11 @@ class EventsPage {
 
     async findEventCard(eventName) {
         const allEventCards = await this.eventCard;
-        console.log(await allEventCards.count());
         await this.page.waitForSelector('#event-card', { state: 'visible', timeout: 5000 });
         expect(await allEventCards.first()).toBeVisible();
 
         // Find the added card
         const addedCard = await allEventCards.filter({ hasText: eventName });
-        console.log(await addedCard.getByText(eventName).textContent());
         await expect(addedCard).toBeVisible({ timeout: 5000 });
         return addedCard;
     }
