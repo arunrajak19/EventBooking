@@ -18,7 +18,7 @@ export default defineConfig({
       use: {
 
         browserName: 'chromium',
-        headless: false,
+        headless: true,
         screenshot: 'on',
         video: 'off',
         trace: 'on',
@@ -34,7 +34,7 @@ export default defineConfig({
       use: {
 
         browserName: 'webkit',
-        headless: false,
+        headless: true,
         screenshot: 'off',
         trace: 'on'
       }
@@ -43,7 +43,7 @@ export default defineConfig({
       name: 'firefox',
       use: {
         browserName: 'firefox',
-        headless: false,
+        headless: true,
         screenshot: 'only-on-failure',
         trace: 'retain-on-failure'
       }
