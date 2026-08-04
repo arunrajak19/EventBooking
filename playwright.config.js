@@ -1,17 +1,21 @@
 // @ts-check
-import { chromium, defineConfig, devices } from '@playwright/test';
+const { defineConfig, devices } = require('@playwright/test');
 
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
-export default defineConfig({
+module.exports = defineConfig({
   testDir: './tests',
   retries: 1,
   timeout: 30 * 1000,
   expect: {
     timeout: 20 * 1000,
   },
-  reporter: 'html',
+  // reporter: 'html',
+  reporter: [
+    ['html'],
+    ['allure-playwright']
+  ],
   projects: [
     {
       name: 'chrome',
@@ -50,6 +54,4 @@ export default defineConfig({
     }
   ]
 });
-
-// module.exports = confiq
 
