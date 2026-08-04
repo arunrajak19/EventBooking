@@ -1,35 +1,51 @@
-# EventBooking
 # 🎟️ Event Booking Automation Framework
 
-A Playwright-based end-to-end automation framework for testing an Event Booking application. The framework follows the **Page Object Model (POM)** design pattern, making the test suite modular, reusable, and easy to maintain.
+A robust **End-to-End Test Automation Framework** built using **Playwright with JavaScript**. This project automates the complete Event Booking workflow by following the **Page Object Model (POM)** design pattern, making the framework scalable, reusable, and easy to maintain.
 
 ---
 
-## 🚀 Features
+# 📌 Project Overview
 
-- End-to-End Event Booking workflow
-- User Login Automation
-- Event Creation
-- Event Search & Validation
-- Ticket Booking
-- Booking Reference Validation
-- My Bookings Verification
-- Available Seats Validation
-- Page Object Model (POM) Architecture
-- Built using Playwright Test Runner
+The framework automates the following user journey:
+
+- User Login
+- Create New Event
+- Verify Event Creation
+- Search Created Event
+- Book Ticket
+- Verify Booking Reference
+- Verify Booking in My Bookings
+- Validate Available Seats Before & After Booking
+
+The framework is designed using industry-standard automation practices and can be easily extended for additional test scenarios.
 
 ---
 
-## 🛠 Tech Stack
+# 🚀 Features
 
-- JavaScript
+- ✅ End-to-End Event Booking Flow
+- ✅ Page Object Model (POM)
+- ✅ Modular & Reusable Code
+- ✅ Playwright Test Runner
+- ✅ Cross Browser Support
+- ✅ HTML Reports
+- ✅ Allure Reporting
+- ✅ Easy Maintenance
+- ✅ Clean Project Structure
+
+---
+
+# 🛠 Tech Stack
+
+- JavaScript (ES6)
 - Node.js
 - Playwright
 - Playwright Test Runner
+- Allure Playwright
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
 ```
 EventBooking/
@@ -45,34 +61,40 @@ EventBooking/
 │   ├── eventBooking.spec.js
 │   └── example.spec.js
 │
+├── test-results/
+├── playwright-report/
+├── allure-results/
+├── allure-report/
+│
 ├── playwright.config.js
 ├── package.json
+├── package-lock.json
 └── README.md
 ```
 
 ---
 
-## ⚙️ Installation
+# ⚙️ Installation
 
-Clone the repository
+## Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/EventBooking.git
+git clone https://github.com/<your-github-username>/EventBooking.git
 ```
 
-Navigate to the project
+## Navigate to Project
 
 ```bash
 cd EventBooking
 ```
 
-Install dependencies
+## Install Dependencies
 
 ```bash
 npm install
 ```
 
-Install Playwright browsers
+## Install Playwright Browsers
 
 ```bash
 npx playwright install
@@ -80,75 +102,90 @@ npx playwright install
 
 ---
 
-## ▶️ Running Tests
+# ▶️ Running Tests
 
-Run all tests
+## Run all tests
 
 ```bash
 npx playwright test
 ```
 
-Run a specific test
+## Run a specific test
 
 ```bash
 npx playwright test tests/eventBooking.spec.js
 ```
 
-Run tests in headed mode
+## Run tests in headed mode
 
 ```bash
 npx playwright test --headed
 ```
 
-Run tests in UI mode
+## Run tests in UI mode
 
 ```bash
 npx playwright test --ui
 ```
 
----
+## Run tests in debug mode
 
-## 📋 Test Scenario
-
-The automation covers the following workflow:
-
-1. Login using valid credentials.
-2. Create a new event.
-3. Verify the event is successfully created.
-4. Navigate to the Events page.
-5. Capture available seats before booking.
-6. Book a ticket for the event.
-7. Verify booking reference is generated.
-8. Verify booking appears in **My Bookings**.
-9. Return to the Events page.
-10. Validate that the available seats decrease after booking.
+```bash
+npx playwright test --debug
+```
 
 ---
 
-## 🏗 Framework Design
+# 📋 Automated Test Scenario
 
-The framework follows the **Page Object Model (POM)** design pattern.
+The automation performs the following steps:
 
-Each page contains its own:
+1. Launch the application.
+2. Login using valid credentials.
+3. Create a new event.
+4. Verify the event is created successfully.
+5. Navigate to the Events page.
+6. Capture available seats before booking.
+7. Book a ticket.
+8. Verify booking reference is generated.
+9. Verify booking is displayed in **My Bookings**.
+10. Return to Events page.
+11. Validate available seats decreased after booking.
+
+---
+
+# 🏗 Framework Design
+
+The framework follows the **Page Object Model (POM)** architecture.
+
+Each page object contains:
 
 - Locators
-- Actions
+- Page Actions
 - Assertions
+- Reusable Methods
 
-This improves:
+### Benefits
 
-- Maintainability
-- Reusability
-- Readability
-- Scalability
+- Better Code Reusability
+- Easy Maintenance
+- High Readability
+- Low Code Duplication
+- Easy Scalability
 
 ---
 
-## 📊 Reports
+# 📊 Reports
 
-After execution, Playwright generates an HTML report.
+## Playwright HTML Report
 
-Open the report using:
+Execute the tests:
+
+```bash
+npx playwright test
+```
+
+Open the HTML report:
 
 ```bash
 npx playwright show-report
@@ -156,19 +193,92 @@ npx playwright show-report
 
 ---
 
-## 📌 Prerequisites
+## Allure Report
 
-- Node.js 18+
-- npm
-- Playwright
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Verify Allure Playwright installation
+
+```bash
+npm ls allure-playwright
+```
+
+### Execute the tests
+
+```bash
+npx playwright test
+```
+
+### Generate and open the report instantly
+
+```bash
+allure serve allure-results
+```
+
+### Generate a static Allure report
+
+```bash
+allure generate ./allure-results --clean
+```
+
+### Open the generated report
+
+```bash
+allure open ./allure-report
+```
 
 ---
 
+# 📌 Prerequisites
 
-## 👨‍💻 Author
+- Node.js 18 or above
+- npm
+- Playwright
+- Java Runtime (Required for Allure)
+- Allure Command Line
+
+---
+
+# 💡 Best Practices Followed
+
+- Page Object Model (POM)
+- Reusable Methods
+- Proper Locator Strategy
+- Assertions using Playwright Expect
+- Clean Folder Structure
+- Modular Test Design
+- Readable & Maintainable Code
+
+---
+
+# 📈 Future Enhancements
+
+- Data-Driven Testing
+- API Integration
+- CI/CD using GitHub Actions
+- Parallel Execution
+- Environment Configuration
+- Docker Support
+- Jenkins Integration
+
+---
+
+# 👨‍💻 Author
 
 **Arun Rajak**
 
-GitHub: https://github.com/<your-username>
+Automation Test Engineer
+
+GitHub: https://github.com/arunrajak19
+
+LinkedIn: https://www.linkedin.com/in/arun-rajak-08b8401b6/
 
 ---
+
+# ⭐ If you found this project helpful
+
+Please consider giving this repository a **Star ⭐** on GitHub.
